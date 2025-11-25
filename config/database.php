@@ -1,34 +1,41 @@
 <?php
-// On inclut le fichier autoload généré par Composer
+// On inclut l'autoload généré par Composer
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// On importe la classe Client depuis la bibliothèque MongoDB
 use MongoDB\Client;
 
 /**
  * Classe Database
- * Gère la connexion à la base MongoDB
+ * Gère la connexion à MongoDB Atlas via Render
  */
 class Database {
-    private static $instance = null; // Singleton
-    private $client;  // Connexion au serveur MongoDB
-    private $db;      // Base MongoDB utilisée
 
-    // Constructeur privé
+    private static $instance = null;
+    private $client;
+    private $db;
+
+    // Constructeur privé pour le Singleton
     private function __construct() {
         try {
-            // URI du serveur MongoDB local
-            $uri = "mongodb+srv://driouichihanane01_db_user:ouHeJ88CutAmnJ23@cluster0.pwazuqh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+            // 🔥 Récupération de l’URI depuis les variables Render
+            $uri = getenv("MONGO_URI");
+
+            if (!$uri) {
+                die("❌ ERREUR : La variable d'environnement MONGO_URI n'est pas définie !");
+            }
+
+            // Connexion au cluster Atlas
             $this->client = new Client($uri);
 
-            // ⚠️ Nom EXACT de ta base (vérifie dans Compass)
-            $this->db = $this->client->Influ_Manager;
+            // 🔥 Nom EXACT de ta base
+            $this->db = $this->client->selectDatabase("Influ_Manager");
+
         } catch (Exception $e) {
             die("❌ Erreur de connexion MongoDB : " . $e->getMessage());
         }
     }
 
-    // Retourne l’unique instance (Singleton)
+    // Singleton : une seule instance de connexion
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new Database();
@@ -36,9 +43,8 @@ class Database {
         return self::$instance;
     }
 
-    // Retourne la base MongoDB
+    // Retourne la base
     public function getDB() {
         return $this->db;
     }
 }
-?>

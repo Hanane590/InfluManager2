@@ -61,7 +61,8 @@
           <td><?= htmlspecialchars($inf['email']) ?></td>
           <td><?= htmlspecialchars($inf['niche']) ?></td>
           <td><?= htmlspecialchars($inf['followers']) ?></td>
-          <td><?= htmlspecialchars($inf['platform']) ?></td>
+          <td><?= isset($inf['platform']) ? htmlspecialchars($inf['platform']) : '—'; ?></td>
+
           
 
           <td class="text-center">

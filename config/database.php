@@ -19,6 +19,7 @@ class Database {
         try {
             // 🔥 Récupération de l’URI depuis les variables Render
             $uri = getenv("MONGO_URI");
+            
 
             if (!$uri) {
                 die("❌ ERREUR : La variable d'environnement MONGO_URI n'est pas définie !");

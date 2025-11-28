@@ -35,7 +35,7 @@ class InfluencerController {
                 'email' => $_POST['email'],
                 'niche' => $_POST['niche'],
                 'followers' => (int)$_POST['followers'],
-                'Platform' => $_POST['platform']
+                'platform' => $_POST['platform']
             ];
             $this->model->create($data);
             header('Location: index.php');
@@ -62,7 +62,7 @@ public function edit($id) {
             'email' => $_POST['email'],
             'niche' => $_POST['niche'],
             'followers' => (int)$_POST['followers'],
-            'Platform' => $_POST['platform']
+            'platform' => $_POST['platform']
         ];
         $this->model->update($id, $data);
         header('Location: index.php');
